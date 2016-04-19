@@ -29,3 +29,5 @@ logger.log('info', 'Loading dependencies... please wait!');
 logger.debug('All dependencies have been loaded.');
 logger.error('An error has occurred!');
 ````
+
+See https://github.com/winstonjs/winston for more details 
