@@ -5,7 +5,8 @@ const loggerLib = require('../lib');
 const path = require('path');
 const fs = require('fs');
 const util = require('util');
-const logFile = __dirname + path.sep + 'test.log';
+const os = require('os');
+const logFile = os.tmpDir() + path.sep + 'cta-logger-test-' + Date.now() + '.log';
 
 describe('tests', function() {
   before(function(done) {
@@ -39,7 +40,7 @@ describe('tests', function() {
         ],
         two: [
           'author two message',
-          'another two again but with meta data',
+          'author two again but with meta data',
           {author: 'two', meta: 'data'},
         ],
       };
