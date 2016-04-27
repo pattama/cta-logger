@@ -4,9 +4,7 @@ const assert = require('chai').assert;
 const loggerLib = require('../lib');
 const path = require('path');
 const fs = require('fs');
-const util = require('util');
-const os = require('os');
-const logFile = os.tmpDir() + path.sep + 'cta-logger-test-' + Date.now() + '.log';
+const logFile = __dirname + path.sep + 'json.log';
 
 describe('tests', function() {
   before(function(done) {
@@ -18,55 +16,54 @@ describe('tests', function() {
       done();
     }
   });
+
+  it('log as json', function(done) {
+    const logger = loggerLib({
+      author: 'zero',
+      level: 'debug',
+      filename: logFile,
+    });
+    logger.info('done with object: ', {a: 1, b: 2});
+    logger.info({c: 3, d: 4});
+    setTimeout(function() {
+      fs.readFile(logFile, 'utf8', (err, data) => {
+        if (err) {
+          done(err);
+        }
+        assert(data.indexOf('"author":"ZERO"') !== -1);
+        assert(data.indexOf('"message":"done with object: "') !== -1);
+        assert(data.indexOf('"meta":{"a":1,"b":2}') !== -1);
+        assert(data.indexOf('"meta":{"c":3,"d":4}') !== -1);
+        done();
+      });
+    }, 500);
+  });
+
   it('log as different authors', function(done) {
-    try {
-      const loggers = {
-        one: loggerLib({
-          author: 'one',
-          level: 'debug',
-          filename: logFile,
-        }),
-        two: loggerLib({
-          author: 'two',
-          level: 'debug',
-          filename: logFile,
-        }),
-      };
-      const msg = {
-        one: [
-          'message from author one',
-          'another message from author one with meta',
-          {author: 'one', meta: 'data'},
-        ],
-        two: [
-          'author two message',
-          'author two again but with meta data',
-          {author: 'two', meta: 'data'},
-        ],
-      };
-      loggers.one.info(msg.one[0]);
-      loggers.one.info(msg.one[1], msg.one[2]);
+    const loggers = {
+      one: loggerLib({
+        author: 'one',
+        level: 'debug',
+        filename: logFile,
+      }),
+      two: loggerLib({
+        author: 'two',
+        level: 'debug',
+        filename: logFile,
+      }),
+    };
+    loggers.one.info('message from author one');
+    loggers.two.info('message from author two');
 
-      loggers.two.info(msg.two[0]);
-      loggers.two.info(msg.two[1], msg.two[2]);
-
-      setTimeout(function() {
-        fs.readFile(logFile, 'utf8', (err, data) => {
-          if (err) {
-            done(err);
-          }
-          assert(data.indexOf(msg.one[0]) !== -1);
-          assert(data.indexOf(msg.one[1]) !== -1);
-          assert(data.indexOf(util.inspect(msg.one[2], false, 5, false)) !== -1);
-
-          assert(data.indexOf(msg.two[0]) !== -1);
-          assert(data.indexOf(msg.two[1]) !== -1);
-          assert(data.indexOf(util.inspect(msg.two[2], false, 5, false)) !== -1);
-          done();
-        });
-      }, 500);
-    } catch (e) {
-      done(e);
-    }
+    setTimeout(function() {
+      fs.readFile(logFile, 'utf8', (err, data) => {
+        if (err) {
+          done(err);
+        }
+        assert(data.indexOf('"author":"ONE"') !== -1);
+        assert(data.indexOf('"author":"TWO"') !== -1);
+        done();
+      });
+    }, 500);
   });
 });
