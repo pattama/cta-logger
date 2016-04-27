@@ -3,12 +3,18 @@ This is the logger module for cta project
 
 ## How it works
 This logger uses [winston](https://github.com/winstonjs/winston) module
+
 It can instantiate multiple loggers with different configurations using winston.Container features
+
 Each logger has two transports: console & file
+
 Console output:
-[console](readme/console.png)
+
+[console](/readme/console.png)
+
 File output:
-[file](readme/file.png)
+
+[file](/readme/file.png)
 
 ## Instantiation
 
@@ -53,7 +59,7 @@ Supported options are:
 
 ## Log levels
 Supported levels by priority: error, warn, info, verbose, debug, silly
-
+````javascript
 logger.log('info', 'your message');
 logger.info('Starting app...');
 
@@ -61,3 +67,4 @@ logger.log('debug', 'Loading dependencies... please wait!');
 logger.debug('All dependencies have been loaded.');
 
 logger.error('An error has occurred!');
+````
