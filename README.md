@@ -10,11 +10,11 @@ Each logger has two transports: console & file
 
 Console output:
 
-[console](/readme/console.png)
+![console](/readme/console.png)
 
 File output:
 
-[file](/readme/file.png)
+![file](/readme/file.png)
 
 ## Instantiation
 
