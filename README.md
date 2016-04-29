@@ -55,6 +55,8 @@ logger.info('Instantiated new logger with custom config', config);
 Supported options are:
 - author: author of the log, basically brick name
 - level: log level (see levels section)
+- console: true or false
+- file: true or false
 - filename: full path to a log file where to save logs in json format 
 
 ## Log levels
