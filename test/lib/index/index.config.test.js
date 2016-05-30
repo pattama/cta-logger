@@ -1,8 +1,8 @@
 'use strict';
 const assert = require('chai').assert;
-const loggerLib = require('../lib');
+const loggerLib = require('../../../lib');
 
-describe('config', function() {
+describe('index - configuration', function() {
   it('should load default config', function() {
     let logger = loggerLib();
     assert(logger.transports);

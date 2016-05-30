@@ -1,11 +1,12 @@
 'use strict';
 
 const assert = require('chai').assert;
-const loggerLib = require('../lib');
+const loggerLib = require('../../../lib');
 const path = require('path');
 const fs = require('fs');
 const logFile = __dirname + path.sep + 'json.log';
-describe('tests', function() {
+
+describe('index - main', function() {
   before(function(done) {
     try {
       fs.unlink(logFile, function() {
@@ -77,6 +78,7 @@ describe('tests', function() {
       });
     }, 500);
   });
+
   it('log as different authors', function(done) {
     const loggers = {
       one: loggerLib({
