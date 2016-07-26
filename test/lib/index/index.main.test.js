@@ -19,7 +19,7 @@ describe('index - main', function() {
 
   it('should log to default config', function(done) {
     const logger = loggerLib();
-    const defaultFileName = logger.transports.file.dirname + path.sep + logger.transports.file.filename;
+    const defaultFileName = logger.transports.file.filename;
     const text = 'It is about ' + new Date() + ' right now!';
     logger.info(text);
     setTimeout(function() {
