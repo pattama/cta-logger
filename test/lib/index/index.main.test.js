@@ -5,8 +5,10 @@ const loggerLib = require('../../../lib');
 const path = require('path');
 const fs = require('fs');
 const logFile = __dirname + path.sep + 'json.log';
+const StreamHook = require('../../StreamHook');
 
 describe('index - main', function() {
+  const streamHook = new StreamHook();
   before(function(done) {
     try {
       fs.unlink(logFile, function() {
@@ -17,11 +19,25 @@ describe('index - main', function() {
     }
   });
 
+  beforeEach(function() {
+    streamHook.startCapture(process.stdout);
+  });
+
+  afterEach(function(){
+    streamHook.stopCapture();
+  });
+
   it('should log to default config', function(done) {
-    const logger = loggerLib();
+    const logger = loggerLib('TEST');
     const defaultFileName = logger.transports.file.filename;
     const text = 'It is about ' + new Date() + ' right now!';
     logger.info(text);
+    const r = streamHook.captured();
+    const logElts = r.split(' - ');
+    assert.equal(logElts.length, 5, 'Log on the console, incorrect tokens count');
+    assert(/info/.test(logElts[1]), 'Log on the console, wrong level "' + logElts[1] + '"');
+    assert.equal(logElts[3], 'TEST', 'Log on the console, wrong author "' + logElts[3] + '"');
+    assert.equal(logElts[4].indexOf(text), 1, 'Log on the console, wrong text "' + logElts[4] + '"');
     setTimeout(function() {
       fs.readFile(defaultFileName, 'utf8', (err, data) => {
         if (err) {
