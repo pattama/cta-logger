@@ -88,6 +88,7 @@ bar.info('Hi, and i am bar');
 ````
 
 * or instantiate it with author parameter
+
 ````javascript
 const Logger = require('cta-logger');
 const logger = new Logger(null, null, 'something');
