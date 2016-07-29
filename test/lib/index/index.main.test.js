@@ -23,7 +23,7 @@ describe('index - main', function() {
     consoleHook.startCapture(process.stdout);
   });
 
-  afterEach(function(){
+  afterEach(function() {
     consoleHook.stopCapture();
   });
 
@@ -96,18 +96,15 @@ describe('index - main', function() {
   });
 
   it('log as different authors', function(done) {
+    const logger = loggerLib({
+      level: 'debug',
+      filename: logFile,
+    });
     const loggers = {
-      one: loggerLib({
-        author: 'one',
-        level: 'debug',
-        filename: logFile,
-      }),
-      two: loggerLib({
-        author: 'two',
-        level: 'debug',
-        filename: logFile,
-      }),
+      one: logger.create('one'),
+      two: logger.create('one'),
     };
+    logger.info('message from default logger');
     loggers.one.info('message from author one');
     loggers.two.info('message from author two');
 
@@ -116,11 +113,11 @@ describe('index - main', function() {
         if (err) {
           done(err);
         }
+        assert(data.indexOf('"author":"UNKNOWN"') !== -1);
         assert(data.indexOf('"author":"ONE"') !== -1);
         assert(data.indexOf('"author":"TWO"') !== -1);
         done();
       });
     }, 500);
   });
-
 });

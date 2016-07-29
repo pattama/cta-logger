@@ -35,7 +35,7 @@ class StreamHook {
     this._buffer = '';
 
     const that = this;
-    stream.write = function (chunk, encoding, callback) {
+    stream.write = function(chunk, encoding, callback) {
       that._buffer += chunk.toString(encoding); // chunk is a String or Buffer
       that._write.apply(that._stream, arguments);
     };
