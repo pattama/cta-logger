@@ -1,5 +1,5 @@
-# cta-logger
-This is the logger module for cta project
+# Tool cta-logger
+This is the logger Tool for cta project
 
 ## How it works
 This logger uses [winston](https://github.com/winstonjs/winston) module
@@ -19,7 +19,8 @@ File output:
 ## Instantiation
 
 ### Inside Bricks
-A logger is instantiated by Cement using its configuration, passed to CementHelper then to the Brick
+A logger is instantiated by Cement using the configuration entry, then passed to the Brick
+It is then available in the Brick level as a dependency of cementHelper: cementHelper.dependencies
 ````javascript
 'use strict';
 const Brick = require('cta-brick');
@@ -27,7 +28,7 @@ class MyBrick extends Brick {
   constructor(cementHelper, config) {
     super(cementHelper, config);
     // At this point you can access the logger instance
-    this.logger.info('Instantiated new Brick with config: ', config);
+    this.logger.info('Instantiated new Brick with config: ', config); // this.logger is a shortcut to cementHelper.dependencies.logger, see cta-brick
     ...
 ````
 
@@ -36,24 +37,21 @@ class MyBrick extends Brick {
 #### default logger options
 ````javascript
 'use strict';
-const loggerLib = require('cta-logger');
-const logger = loggerLib();
+const Logger = require('cta-logger');
+const logger = new Logger();
 logger.info('Instantiated new logger with default config');
 ````
 
 #### custom logger options
 ````javascript
-const loggerLib = require('cta-logger');
-const config = {
-   author: 'cta-logger',
-   filename: __dirname + '/default.log',
-   level: 'silly',
-};
-const logger = loggerLib(config);
+const Logger = require('cta-logger');
+const logger = new Logger({
+    filename: __dirname + '/default.log',
+    level: 'silly',
+});
 logger.info('Instantiated new logger with custom config', config);
 ```` 
 Supported options are:
-- author: author of the log, basically brick name
 - level: log level (see levels section)
 - console: true or false
 - file: true or false
@@ -69,4 +67,31 @@ logger.log('debug', 'Loading dependencies... please wait!');
 logger.debug('All dependencies have been loaded.');
 
 logger.error('An error has occurred!');
+````
+
+### Log output author or id
+By default, author of the log output is set to UNKNOWN, to override it you can either
+
+* ask for a new logger instance
+
+````javascript
+const Logger = require('cta-logger');
+const logger = new Logger();
+const foo = logger.author('foo');
+const bar = logger.author('bar');
+logger.info('Hi there');
+// 2016-07-29T16:07:05.259Z - info - DESKTOP-8ONSCVQ - UNKNOWN - "Hi there"
+foo.info('Hi, i am foo');
+// 2016-07-29T16:07:05.263Z - info - DESKTOP-8ONSCVQ - FOO - "Hi, i am foo"
+bar.info('Hi, and i am bar');
+// 2016-07-29T16:07:05.264Z - info - DESKTOP-8ONSCVQ - BAR - "Hi, and i am bar"
+````
+
+* or instantiate it with author parameter
+
+````javascript
+const Logger = require('cta-logger');
+const logger = new Logger(null, null, 'something');
+logger.info('Hi');
+// 2016-07-29T16:10:05.123Z - info - DESKTOP-8ONSCVQ - SOMETHING - "Hi"
 ````
