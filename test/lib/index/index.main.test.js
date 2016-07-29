@@ -8,7 +8,7 @@ const logFile = __dirname + path.sep + 'json.log';
 const StreamHook = require('../../StreamHook');
 
 describe('index - main', function() {
-  const streamHook = new StreamHook();
+  const consoleHook = new StreamHook();
   before(function(done) {
     try {
       fs.unlink(logFile, function() {
@@ -20,11 +20,11 @@ describe('index - main', function() {
   });
 
   beforeEach(function() {
-    streamHook.startCapture(process.stdout);
+    consoleHook.startCapture(process.stdout);
   });
 
   afterEach(function(){
-    streamHook.stopCapture();
+    consoleHook.stopCapture();
   });
 
   it('should log to default config', function(done) {
@@ -32,7 +32,7 @@ describe('index - main', function() {
     const defaultFileName = logger.transports.file.filename;
     const text = 'It is about ' + new Date() + ' right now!';
     logger.info(text);
-    const r = streamHook.captured();
+    const r = consoleHook.captured();
     const logElts = r.split(' - ');
     assert.equal(logElts.length, 5, 'Log on the console, incorrect tokens count');
     assert(/info/.test(logElts[1]), 'Log on the console, wrong level "' + logElts[1] + '"');
