@@ -2,7 +2,7 @@
 
 const o = require('../common');
 
-describe('allow different ways to call logger', () => {
+describe.skip('allow different ways to call logger', () => {
   it('deprecated - default params', () => {
     const logger = o.Lib();
     o.assert.property(logger, 'info');
