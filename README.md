@@ -45,9 +45,12 @@ logger.info('Instantiated new logger with default config');
 #### custom logger options
 ````javascript
 const Logger = require('cta-logger');
-const logger = new Logger({
-    filename: __dirname + '/default.log',
-    level: 'silly',
+const logger = new Logger(null, {
+    name: 'logger',
+    properties: {
+        filename: __dirname + '/default.log',
+        level: 'silly',
+    },
 });
 logger.info('Instantiated new logger with custom config', config);
 ```` 

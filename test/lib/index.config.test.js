@@ -5,9 +5,6 @@ let logger;
 describe('configuration', function() {
   it('should load default config', function() {
     logger = new o.Lib();
-    o.assert(logger.transports);
-    o.assert(logger.transports.console);
-    o.assert(logger.transports.file);
     o.assert.equal(logger.transports.console.level, 'debug');
     o.assert.equal(logger.transports.file.level, 'debug');
     logger = null;

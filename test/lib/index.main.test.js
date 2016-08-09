@@ -1,10 +1,9 @@
 'use strict';
 const o = require('../common');
 const logFile = __dirname + o.path.sep + 'json.log';
-const StreamHook = require('../StreamHook');
 
 describe('main', function() {
-  const consoleHook = new StreamHook();
+  const consoleHook = new o.StreamHook();
   before(function(done) {
     try {
       o.fs.unlink(logFile, function() {

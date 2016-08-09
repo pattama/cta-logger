@@ -5,6 +5,8 @@ const path = require('path');
 const fs = require('fs');
 const os = require('os');
 const Lib = require('../lib');
+const shortid = require('shortid');
+const StreamHook = require('./streamhook');
 
 module.exports = {
   assert: chai.assert,
@@ -12,4 +14,6 @@ module.exports = {
   fs: fs,
   os: os,
   Lib: Lib,
+  StreamHook: StreamHook,
+  shortid: shortid,
 };
