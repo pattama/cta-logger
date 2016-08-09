@@ -62,6 +62,7 @@ Supported options are:
 
 ## Log levels
 Supported levels by priority: error, warn, info, verbose, debug, silly
+
 ````javascript
 logger.log('info', 'your message');
 logger.info('Starting app...');
@@ -71,6 +72,12 @@ logger.debug('All dependencies have been loaded.');
 
 logger.error('An error has occurred!');
 ````
+
+If you configure your logger with a level 'info' you will see only logged message with levels: error, warn, info
+
+If you configure your logger with a level 'debug' you will see only logged message with levels: error, warn, info, verbose, debug
+
+..etc
 
 ### Log output author or id
 By default, author of the log output is set to UNKNOWN, to override it you can either
