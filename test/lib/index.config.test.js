@@ -14,10 +14,13 @@ describe('configuration', function() {
   });
 
   it('console: false / file: true / level: silly', function() {
-    logger = new o.Lib({
-      level: 'silly',
-      console: false,
-      file: true,
+    logger = new o.Lib(null, {
+      name: 'logger',
+      properties: {
+        level: 'silly',
+        console: false,
+        file: true,
+      },
     });
     o.assert(logger.transports);
     o.assert(!logger.transports.console);
@@ -26,10 +29,13 @@ describe('configuration', function() {
   });
 
   it('console: true / file: false / level: verbose', function() {
-    logger = new o.Lib({
-      level: 'verbose',
-      console: true,
-      file: false,
+    logger = new o.Lib(null, {
+      name: 'logger',
+      properties: {
+        level: 'verbose',
+        console: true,
+        file: false,
+      },
     });
     o.assert(logger.transports);
     o.assert(!logger.transports.file);

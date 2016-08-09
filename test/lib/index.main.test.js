@@ -24,7 +24,7 @@ describe('main', function() {
   });
 
   it('should log to default config', function(done) {
-    const logger = new o.Lib(null, null, 'test');
+    const logger = new o.Lib();
     const defaultFileName = logger.transports.file.dirname + o.path.sep + logger.transports.file.filename;
     const text = 'It is about ' + new Date() + ' right now!';
     logger.info(text);
@@ -32,7 +32,7 @@ describe('main', function() {
     const logElts = r.split(' - ');
     o.assert.equal(logElts.length, 5, 'Log on the console, incorrect tokens count');
     o.assert(/info/.test(logElts[1]), 'Log on the console, wrong level "' + logElts[1] + '"');
-    o.assert.equal(logElts[3], 'TEST', 'Log on the console, wrong author "' + logElts[3] + '"');
+    o.assert.equal(logElts[3], 'UNKNOWN', 'Log on the console, wrong author "' + logElts[3] + '"');
     o.assert.equal(logElts[4].indexOf(text), 1, 'Log on the console, wrong text "' + logElts[4] + '"');
     setTimeout(function() {
       o.fs.readFile(defaultFileName, 'utf8', (err, data) => {
@@ -46,11 +46,15 @@ describe('main', function() {
   });
 
   it('log to custom config', function(done) {
-    const logger = new o.Lib({
-      level: 'info',
-      file: true,
-      filename: logFile,
-    }, null, 'zero');
+    const logger = new o.Lib(null, {
+      name: 'logger',
+      properties: {
+        author: 'zero',
+        level: 'info',
+        file: true,
+        filename: logFile,
+      },
+    });
     const text = 'It is about ' + new Date() + ' right now!';
     logger.info(text);
     logger.debug('should be ignored');
@@ -68,11 +72,15 @@ describe('main', function() {
   });
 
   it('should log meta objects', function(done) {
-    const logger = new o.Lib({
-      level: 'debug',
-      file: true,
-      filename: logFile,
-    }, null, 'zero');
+    const logger = new o.Lib(null, {
+      name: 'logger',
+      properties: {
+        author: 'zero',
+        level: 'debug',
+        file: true,
+        filename: logFile,
+      },
+    });
     logger.info('done with object: ', {a: 1, b: 2});
     logger.info({c: 3, d: 4});
     setTimeout(function() {
@@ -90,9 +98,12 @@ describe('main', function() {
   });
 
   it('log as different authors', function(done) {
-    const logger = new o.Lib({
-      level: 'debug',
-      filename: logFile,
+    const logger = new o.Lib(null, {
+      name: 'logger',
+      properties: {
+        level: 'debug',
+        filename: logFile,
+      },
     });
     const loggers = {
       one: logger.author('one'),
