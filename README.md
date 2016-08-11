@@ -1,7 +1,9 @@
 # Tool cta-logger
+
 This is the logger Tool for cta project
 
 ## How it works
+
 This logger uses [winston](https://github.com/winstonjs/winston) module
 
 It can instantiate multiple loggers with different configurations using winston.Container features
@@ -19,8 +21,10 @@ File output:
 ## Instantiation
 
 ### Inside Bricks
-A logger is instantiated by Cement using the configuration entry, then passed to the Brick
+
+A logger is instantiated by Cement using the configuration entry, then passed to the Brick through CementHelper
 It is then available in the Brick level as a dependency of cementHelper: cementHelper.dependencies
+
 ````javascript
 'use strict';
 const Brick = require('cta-brick');
@@ -35,6 +39,7 @@ class MyBrick extends Brick {
 ### Outside Bricks
 
 #### default logger options
+
 ````javascript
 'use strict';
 const Logger = require('cta-logger');
@@ -43,6 +48,7 @@ logger.info('Instantiated new logger with default config');
 ````
 
 #### custom logger options
+
 ````javascript
 const Logger = require('cta-logger');
 const logger = new Logger(null, {
@@ -54,6 +60,7 @@ const logger = new Logger(null, {
 });
 logger.info('Instantiated new logger with custom config', config);
 ```` 
+
 Supported options are:
 - level: log level (see levels section)
 - console: true or false
@@ -61,6 +68,7 @@ Supported options are:
 - filename: full path to a log file where to save logs in json format 
 
 ## Log levels
+
 Supported levels by priority: error, warn, info, verbose, debug, silly
 
 ````javascript
@@ -79,7 +87,8 @@ If you configure your logger with a level 'debug' you will see only logged messa
 
 ..etc
 
-### Log output author or id
+### Log output author name
+
 By default, author of the log output is set to UNKNOWN, to override it you can either
 
 * ask for a new logger instance
@@ -90,18 +99,48 @@ const logger = new Logger();
 const foo = logger.author('foo');
 const bar = logger.author('bar');
 logger.info('Hi there');
-// 2016-07-29T16:07:05.259Z - info - DESKTOP-8ONSCVQ - UNKNOWN - "Hi there"
+// 2016-07-29T16:07:05.259Z - info - DESKTOP-8ONSCVQ - UNKNOWN - UNKNOWN - "Hi there"
 foo.info('Hi, i am foo');
-// 2016-07-29T16:07:05.263Z - info - DESKTOP-8ONSCVQ - FOO - "Hi, i am foo"
+// 2016-07-29T16:07:05.263Z - info - DESKTOP-8ONSCVQ - UNKNOWN - FOO - "Hi, i am foo"
 bar.info('Hi, and i am bar');
-// 2016-07-29T16:07:05.264Z - info - DESKTOP-8ONSCVQ - BAR - "Hi, and i am bar"
+// 2016-07-29T16:07:05.264Z - info - DESKTOP-8ONSCVQ - UNKNOWN - BAR - "Hi, and i am bar"
 ````
 
 * or instantiate it with author parameter
 
 ````javascript
 const Logger = require('cta-logger');
-const logger = new Logger(null, null, 'something');
+const logger = new Logger(null, {
+    properties: {
+        author: 'something',
+    },
+});
 logger.info('Hi');
-// 2016-07-29T16:10:05.123Z - info - DESKTOP-8ONSCVQ - SOMETHING - "Hi"
+// 2016-07-29T16:10:05.123Z - info - DESKTOP-8ONSCVQ - UNKNOWN - SOMETHING - "Hi"
+````
+
+### Log output application name
+
+By default, application name is set to UNKNOWN, to override it you need cement dependency to access application configuration
+
+````javascript
+const Logger = require('cta-logger');
+const logger = new Logger({
+  cement: {
+    configuration: {
+      name: 'my app',
+    },
+  },
+}, null);
+const foo = logger.author('foo');
+const bar = logger.author('bar');
+
+logger.info('Starting app...');
+// 2016-08-11T12:31:48.258Z - info - DESKTOP-8ONSCVQ - MY APP - UNKNOWN - "Starting app..."
+
+foo.info('Hi, i am foo');
+// 2016-08-11T12:31:48.262Z - info - DESKTOP-8ONSCVQ - MY APP - FOO - "Hi, i am foo"
+
+bar.info('Hi, and i am bar');
+// 2016-08-11T12:31:48.263Z - info - DESKTOP-8ONSCVQ - MY APP - BAR - "Hi, and i am bar"
 ````
