@@ -37,5 +37,7 @@
     "winston": "~2.2.0",
     "lodash": "4.14.0"
   },
-  "sourceDependencies": {}
+  "sourceDependencies": {
+    "cta-common": "git@git.sami.int.thomsonreuters.com:compass/cta-common.git"
+  }
 }
