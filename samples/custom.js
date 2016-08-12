@@ -1,7 +1,7 @@
 'use strict';
 const os = require('os');
 const path = require('path');
-const Logger = require('cta-logger');
+const Logger = require('../lib');
 const filename = os.tmpDir() + path.sep + 'default.txt';
 const logger = new Logger({
   cement: {

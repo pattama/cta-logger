@@ -1,6 +1,6 @@
 'use strict';
 
-const Logger = require('cta-logger');
+const Logger = require('../lib');
 const logger = new Logger();
 const foo = logger.author('foo');
 const bar = logger.author('bar');
