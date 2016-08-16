@@ -16,4 +16,5 @@ module.exports = {
   Lib: Lib,
   StreamHook: StreamHook,
   shortid: shortid,
+  levels: ['error', 'warn', 'info', 'verbose', 'debug', 'silly'],
 };
