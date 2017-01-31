@@ -23,7 +23,7 @@ describe('log levels', () => {
       });
       setTimeout(() => {
         const data = o.fs.readFileSync(logFile).toString();
-        console.log('data for level ' + level, data);
+        // console.log('data for level ' + level, data);
         o.fs.unlinkSync(logFile);
         for (let i = 0; i < o.levels.length; i++) {
           const lev = o.levels[i];

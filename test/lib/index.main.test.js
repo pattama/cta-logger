@@ -62,7 +62,7 @@ describe('main', function() {
     logger.debug('should be ignored');
     setTimeout(function() {
       const data = o.fs.readFileSync(logFile).toString();
-      console.log('data: ', data);
+      // console.log('data: ', data);
       o.assert(data.indexOf('MY APP') !== -1);
       o.assert(data.indexOf('ZERO') !== -1);
       o.assert(data.indexOf(text) !== -1);
