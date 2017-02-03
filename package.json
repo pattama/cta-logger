@@ -33,7 +33,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "cta-common": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/cta-common.git",
+    "cta-common": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/cta-common.git#1.0.0",
     "winston": "~2.2.0",
     "lodash": "4.14.0"
   }
