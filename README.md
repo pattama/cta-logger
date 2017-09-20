@@ -106,7 +106,7 @@ logger.info('Initialized a new instance of Logger with custom config');
 
 ### 2. Logger Configuration
 
-Logger Configuration is provided when a logger is being instantiated.
+**Logger Configuration** is provided when a logger is being instantiated.
 
 ```javascript
 const logger = new Logger(null, LoggerConfiguration);
