@@ -14,27 +14,27 @@ Logger Modules for Compass Test Automation, One of Libraries in CTA-OSS Framewor
 
   * Console Transport Example:
 
-```javascript
-2017-09-09T13:10:25.904Z - debug - HOSTNAME - APP - AUTHOR - "Log file set to: C:\\Users\\Panit.Tuangsuwan\\AppData\\Local\\Temp\\cta-logger-silly"
-2017-09-09T13:10:25.905Z - error - HOSTNAME - APP - AUTHOR - "silly error message"
-2017-09-09T13:10:25.906Z - warn - HOSTNAME - APP - AUTHOR - "silly warn message"
-2017-09-09T13:10:25.907Z - info - HOSTNAME - APP - AUTHOR - "silly info message"
-2017-09-09T13:10:25.908Z - verbose - HOSTNAME - APP - AUTHOR - "silly verbose message"
-2017-09-09T13:10:25.909Z - debug - HOSTNAME - APP - AUTHOR - "silly debug message"
-2017-09-09T13:10:25.910Z - silly - HOSTNAME - APP - AUTHOR - "silly silly message"
-```
+  ```javascript
+  2017-09-09T13:10:25.904Z - debug - HOSTNAME - APP - AUTHOR - "Log file set to: C:\\Users\\Panit.Tuangsuwan\\AppData\\Local\\Temp\\cta-logger-silly"
+  2017-09-09T13:10:25.905Z - error - HOSTNAME - APP - AUTHOR - "silly error message"
+  2017-09-09T13:10:25.906Z - warn - HOSTNAME - APP - AUTHOR - "silly warn message"
+  2017-09-09T13:10:25.907Z - info - HOSTNAME - APP - AUTHOR - "silly info message"
+  2017-09-09T13:10:25.908Z - verbose - HOSTNAME - APP - AUTHOR - "silly verbose message"
+  2017-09-09T13:10:25.909Z - debug - HOSTNAME - APP - AUTHOR - "silly debug message"
+  2017-09-09T13:10:25.910Z - silly - HOSTNAME - APP - AUTHOR - "silly silly message"
+  ```
 
   * File Transport Example:
 
-```javascript
-{"timestamp":"2017-09-09T13:10:25.904Z", "level":"debug", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"Log file set to: C:\\Users\\Panit.Tuangsuwan\\AppData\\Local\\Temp\\cta-logger-silly"}
-{"timestamp":"2017-09-09T13:10:25.905Z", "level":"error", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly error message"}
-{"timestamp":"2017-09-09T13:10:25.906Z", "level":"warn", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly warn message"}
-{"timestamp":"2017-09-09T13:10:25.907Z", "level":"info", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly info message"}
-{"timestamp":"2017-09-09T13:10:25.908Z", "level":"verbose", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly verbose message"}
-{"timestamp":"2017-09-09T13:10:25.909Z", "level":"debug", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly debug message"}
-{"timestamp":"2017-09-09T13:10:25.9010Z", "level":"silly", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly silly message"}
-```
+  ```javascript
+  {"timestamp":"2017-09-09T13:10:25.904Z", "level":"debug", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"Log file set to: C:\\Users\\Panit.Tuangsuwan\\AppData\\Local\\Temp\\cta-logger-silly"}
+  {"timestamp":"2017-09-09T13:10:25.905Z", "level":"error", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly error message"}
+  {"timestamp":"2017-09-09T13:10:25.906Z", "level":"warn", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly warn message"}
+  {"timestamp":"2017-09-09T13:10:25.907Z", "level":"info", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly info message"}
+  {"timestamp":"2017-09-09T13:10:25.908Z", "level":"verbose", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly verbose message"}
+  {"timestamp":"2017-09-09T13:10:25.909Z", "level":"debug", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly debug message"}
+  {"timestamp":"2017-09-09T13:10:25.9010Z", "level":"silly", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly silly message"}
+  ```
 
 ## Guidelines
 
