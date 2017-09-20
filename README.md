@@ -13,7 +13,6 @@ Logger Modules for Compass Test Automation, One of Libraries in CTA-OSS Framewor
 * Each logger has two transports: Console & File:
 
   + Console Transport Example:
-
   ```javascript
   2017-09-09T13:10:25.904Z - debug - HOSTNAME - APP - AUTHOR - "Log file set to: C:\\Users\\Panit.Tuangsuwan\\AppData\\Local\\Temp\\cta-logger-silly"
   2017-09-09T13:10:25.905Z - error - HOSTNAME - APP - AUTHOR - "silly error message"
@@ -23,9 +22,7 @@ Logger Modules for Compass Test Automation, One of Libraries in CTA-OSS Framewor
   2017-09-09T13:10:25.909Z - debug - HOSTNAME - APP - AUTHOR - "silly debug message"
   2017-09-09T13:10:25.910Z - silly - HOSTNAME - APP - AUTHOR - "silly silly message"
   ```
-
   + File Transport Example:
-
   ```javascript
   {"timestamp":"2017-09-09T13:10:25.904Z", "level":"debug", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"Log file set to: C:\\Users\\Panit.Tuangsuwan\\AppData\\Local\\Temp\\cta-logger-silly"}
   {"timestamp":"2017-09-09T13:10:25.905Z", "level":"error", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly error message"}
