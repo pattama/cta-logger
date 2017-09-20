@@ -10,7 +10,7 @@ Logger Modules for Compass Test Automation, One of Libraries in CTA-OSS Framewor
 
 * Multiple loggers are necessary and can instantiated with different configurations using [winston.Container](https://github.com/winstonjs/winston/blob/master/README.md#working-with-multiple-loggers-in-winston) features.
 
-* Each logger has two transports: Console & File:
+* Each logger has _two_ transports: **Console** and **File**:
 
   + Console Transport Example:
   
@@ -23,6 +23,7 @@ Logger Modules for Compass Test Automation, One of Libraries in CTA-OSS Framewor
   2017-09-09T13:10:25.909Z - debug - HOSTNAME - APP - AUTHOR - "silly debug message"
   2017-09-09T13:10:25.910Z - silly - HOSTNAME - APP - AUTHOR - "silly silly message"
   ```
+  
   + File Transport Example:
 
   ```javascript
