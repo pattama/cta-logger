@@ -1,73 +1,142 @@
-# Tool cta-logger
+# cta-logger [ ![build status](https://git.sami.int.thomsonreuters.com/compass/cta-logger/badges/master/build.svg)](https://git.sami.int.thomsonreuters.com/compass/cta-logger/commits/master) [![coverage report](https://git.sami.int.thomsonreuters.com/compass/cta-logger/badges/master/coverage.svg)](https://git.sami.int.thomsonreuters.com/compass/cta-logger/commits/master)
 
-This is the logger Tool for cta project
+Logger Modules for Compass Test Automation, One of Libraries in CTA-OSS Framework
 
-## How it works
+## General Overview
 
-This logger uses [winston](https://github.com/winstonjs/winston) module
+### Overview
 
-It can instantiate multiple loggers with different configurations using winston.Container features
+* The loggers, which are provided in this module, implementing [winston](https://github.com/winstonjs/winston). 
 
-Each logger has two transports: console & file
+* Multiple loggers are necessary and can instantiated with different configurations using [winston.Container](https://github.com/winstonjs/winston/blob/master/README.md#working-with-multiple-loggers-in-winston) features.
 
-Console output:
+* Each logger has two transports: Console & File:
 
-![console](/readme/console.png)
+  * Console Transport Example:
+```
+2017-09-09T13:10:25.904Z - debug - HOSTNAME - APP - AUTHOR - "Log file set to: C:\\Users\\Panit.Tuangsuwan\\AppData\\Local\\Temp\\cta-logger-silly"
+2017-09-09T13:10:25.905Z - error - HOSTNAME - APP - AUTHOR - "silly error message"
+2017-09-09T13:10:25.906Z - warn - HOSTNAME - APP - AUTHOR - "silly warn message"
+2017-09-09T13:10:25.907Z - info - HOSTNAME - APP - AUTHOR - "silly info message"
+2017-09-09T13:10:25.908Z - verbose - HOSTNAME - APP - AUTHOR - "silly verbose message"
+2017-09-09T13:10:25.909Z - debug - HOSTNAME - APP - AUTHOR - "silly debug message"
+2017-09-09T13:10:25.910Z - silly - HOSTNAME - APP - AUTHOR - "silly silly message"
+```
 
-File output:
+  * File Transport Example:
+```
+{"timestamp":"2017-09-09T13:10:25.904Z", "level":"debug", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"Log file set to: C:\\Users\\Panit.Tuangsuwan\\AppData\\Local\\Temp\\cta-logger-silly"}
+{"timestamp":"2017-09-09T13:10:25.905Z", "level":"error", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly error message"}
+{"timestamp":"2017-09-09T13:10:25.906Z", "level":"warn", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly warn message"}
+{"timestamp":"2017-09-09T13:10:25.907Z", "level":"info", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly info message"}
+{"timestamp":"2017-09-09T13:10:25.908Z", "level":"verbose", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly verbose message"}
+{"timestamp":"2017-09-09T13:10:25.909Z", "level":"debug", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly debug message"}
+{"timestamp":"2017-09-09T13:10:25.9010Z", "level":"silly", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly silly message"}
+```
 
-![file](/readme/file.png)
+## Guidelines
 
-## Instantiation
+We aim to give you brief guidelines here.
 
-### Inside Bricks
+### 1. Instantiation
 
-A logger is instantiated by Cement using the configuration entry, then passed to the Brick through CementHelper
-It is then available in the Brick level as a dependency of cementHelper: cementHelper.dependencies
+A logger can be instantiated in two different ways:
+* [Inside Brick](#inside-brick)
+* [Outside Brick (anywhere)](#outside-brick-anywhere-)
 
-````javascript
+#### Inside Brick
+
+Inside Brick, the logger is _instantiated by **Cement** using the configuration entry_ and _provided to the Brick via **CementHelper**_.
+It's usually available in the **Brick** level as a dependency of **cementHelper** : **cementHelper.dependencies**.
+
+```javascript
 'use strict';
+
 const Brick = require('cta-brick');
+
 class MyBrick extends Brick {
   constructor(cementHelper, config) {
+    // By calling Brick constructor (super) and providing the config, the 'Brick-level' logger is instantiated.
     super(cementHelper, config);
-    // At this point you can access the logger instance
-    this.logger.info('Instantiated new Brick with config: ', config); // this.logger is a shortcut to cementHelper.dependencies.logger, see cta-brick
+
+    // At this point, the logger instance is avaliable and can be accessed.
+    this.logger.info('Initializing a new instance of Brick with config: ', config);
     ...
-````
+  }
+}
+```
 
-### Outside Bricks
+In the Brick, __this.logger__ is a reference to __cementHelper.dependencies.logger__ (see **_cta-brick_**).
 
-#### default logger options
+#### Outside Brick (anywhere)
 
-````javascript
+Outside Brick or _**anywhere**_, the logger can be instantiated with _default_ or _custom_ options.
+
+##### default options
+
+```javascript
 'use strict';
+
 const Logger = require('cta-logger');
+
 const logger = new Logger();
-logger.info('Instantiated new logger with default config');
-````
 
-#### custom logger options
+logger.info('Initialized a new instance of Logger with default config');
+```
 
-````javascript
+##### custom options
+
+```javascript
+'use strict';
+
 const Logger = require('cta-logger');
+
 const logger = new Logger(null, {
-    name: 'logger',
-    properties: {
-        filename: __dirname + '/default.log',
-        level: 'silly',
-    },
+  name: 'logger',
+  properties: {
+    filename: __dirname + '/default.log',
+    level: 'silly',
+  },
 });
-logger.info('Instantiated new logger with custom config', config);
-```` 
 
-Supported options are:
-- level: log level (see levels section)
-- console: true or false
-- file: true or false
-- filename: full path to a log file where to save logs in json format 
+logger.info('Initialized a new instance of Logger with custom config');
+```
 
-## Log levels
+### 2. Logger Configuration
+
+Logger Configuration is provided when a logger is being instantiated.
+
+```javascript
+const logger = new Logger(null, LoggerConfiguration);
+```
+
+#### Logger Configuration Structure
+
+```javascript
+const LoggerConfiguration = {
+  name: string,
+  properties: {
+    level: string,
+    console: boolean,
+    file: boolean,
+    filename: string
+  }
+};
+```
+
+* __name__ defines the name of logger
+* __properties__ defines how a logger is setup
+  * __level__ defines the log level to be used (see [_Log Levels_](#3-log-levels))
+  * __console__ defines whether a console transport log is enabled
+  * __file__ defines whether a console transport log is enabled
+  * __filename__ defines a full path of logs file to be used
+
+
+
+
+
+
+### 3. Log Levels
 
 Supported levels by priority: error, warn, info, verbose, debug, silly
 
@@ -87,7 +156,7 @@ If you configure your logger with a level 'debug' you will see only logged messa
 
 ..etc
 
-### Log output author name
+### 4. Log Output Author Name
 
 By default, author of the log output is set to UNKNOWN, to override it you can either
 
@@ -119,7 +188,7 @@ logger.info('Hi');
 // 2016-07-29T16:10:05.123Z - info - DESKTOP-8ONSCVQ - UNKNOWN - SOMETHING - "Hi"
 ````
 
-### Log output application name
+### 5. Log Output Application Name
 
 By default, application name is set to UNKNOWN, to override it you need cement dependency to access application configuration
 
