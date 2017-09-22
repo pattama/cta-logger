@@ -33,7 +33,7 @@ Logger Modules for Compass Test Automation, One of Libraries in CTA-OSS Framewor
   {"timestamp":"2017-09-09T13:10:25.907Z", "level":"info", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly info message"}
   {"timestamp":"2017-09-09T13:10:25.908Z", "level":"verbose", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly verbose message"}
   {"timestamp":"2017-09-09T13:10:25.909Z", "level":"debug", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly debug message"}
-  {"timestamp":"2017-09-09T13:10:25.9010Z", "level":"silly", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly silly message"}
+  {"timestamp":"2017-09-09T13:10:25.910Z", "level":"silly", "hostname":"HOSTNAME", "application":"APP", "author":"AUTHOR", "message":"silly silly message"}
   ```
 
 ## Guidelines
