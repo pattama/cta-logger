@@ -260,6 +260,8 @@ cta_api.info('info message');
 
 [back to top](#guidelines)
 
+------
+
 ## To Do
 
 * decoupling **cta-logger** and **winston**
