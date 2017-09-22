@@ -40,6 +40,13 @@ Logger Modules for Compass Test Automation, One of Libraries in CTA-OSS Framewor
 
 We aim to give you brief guidelines here.
 
+1. [Instantiation](#1-instantiation)
+1. [Logger Configuration](#2-logger-configuration)
+1. [Log Levels](#3-log-levels)
+1. [Log Format](#4-log-format)
+1. [Author Name in Log Output](#5-author-name-in-log-output)
+1. [Application Name in Log Output](#6-application-name-in-log-output)
+
 ### 1. Instantiation
 
 A logger can be instantiated in two different ways:
@@ -104,6 +111,8 @@ const logger = new Logger(null, {
 logger.info('Initialized a new instance of Logger with custom config');
 ```
 
+[back to top](#guidelines)
+
 ### 2. Logger Configuration
 
 **Logger Configuration** is provided when a logger is being instantiated.
@@ -119,6 +128,7 @@ const LoggerConfiguration = {
   name: string,
   properties: {
     level: string,
+    author: string,
     console: boolean,
     file: boolean,
     filename: string
@@ -129,89 +139,127 @@ const LoggerConfiguration = {
 * __name__ defines the name of logger
 * __properties__ defines how a logger is setup
   * __level__ defines the log level to be used (see [_Log Levels_](#3-log-levels))
+  * __author__ defines [__author name__](#5-author-name-in-log-output) in log output
   * __console__ defines whether a console transport log is enabled
   * __file__ defines whether a console transport log is enabled
   * __filename__ defines a full path of logs file to be used
 
-
-
-
-
+[back to top](#guidelines)
 
 ### 3. Log Levels
 
-Supported levels by priority: error, warn, info, verbose, debug, silly
+We aim to support these log levels : [__error__, __warn__, __info__, __verbose__, __debug__, __silly__], ordered in __priorty__.
 
-````javascript
-logger.log('info', 'your message');
-logger.info('Starting app...');
+If the logger set its level as __info__, any message logging with levels: *error*, *warn*, *info* will be logged.
 
-logger.log('debug', 'Loading dependencies... please wait!');
-logger.debug('All dependencies have been loaded.');
+If the logger set its level as __debug__, any message logging with levels: *error*, *warn*, *info*, *verbose*, *debug* will be logged. 
 
-logger.error('An error has occurred!');
-````
+Level: __info__ = [__error__, __warn__, __info__, verbose, debug, silly]
 
-If you configure your logger with a level 'info' you will see only logged message with levels: error, warn, info
+Level: __debug__ = [__error__, __warn__, __info__, __verbose__, __debug__, silly]
 
-If you configure your logger with a level 'debug' you will see only logged message with levels: error, warn, info, verbose, debug
+[back to top](#guidelines)
 
-..etc
+### 4. Log Format
 
-### 4. Log Output Author Name
+When it's logging, [Log Level](#3-log-levels) and a message are needed as log format. There are two log formats.
 
-By default, author of the log output is set to UNKNOWN, to override it you can either
+- logger.log(*log_level*, *message*) method
 
-* ask for a new logger instance
+```javascript
+logger.log('info', 'message');
+logger.log('debug', 'message');
+logger.log('error', 'message');
+```
 
-````javascript
+- logger.*loglevel*(*message*) method
+
+```javascript
+logger.info('message');
+logger.debug('message');
+logger.error('message');
+```
+Both **_logger.log('info', 'message')_** and **_logger.info('message')_** effect the same. Either is your preference.
+
+[back to top](#guidelines)
+
+### 5. Author Name in Log Output
+
+The Logger has **_Author Name_** as a part of log output.
+
+By default, the author of the log output is set to "**UNKNOWN**".
+
+**Author Name** can be set by either _parameter in instantiating_ or _logger.author()_.
+
+* parameter in instantiating
+
+```javascript
+'use strict';
+
 const Logger = require('cta-logger');
-const logger = new Logger();
-const foo = logger.author('foo');
-const bar = logger.author('bar');
-logger.info('Hi there');
-// 2016-07-29T16:07:05.259Z - info - DESKTOP-8ONSCVQ - UNKNOWN - UNKNOWN - "Hi there"
-foo.info('Hi, i am foo');
-// 2016-07-29T16:07:05.263Z - info - DESKTOP-8ONSCVQ - UNKNOWN - FOO - "Hi, i am foo"
-bar.info('Hi, and i am bar');
-// 2016-07-29T16:07:05.264Z - info - DESKTOP-8ONSCVQ - UNKNOWN - BAR - "Hi, and i am bar"
-````
 
-* or instantiate it with author parameter
-
-````javascript
-const Logger = require('cta-logger');
 const logger = new Logger(null, {
     properties: {
-        author: 'something',
+        author: 'cta-agent',
     },
 });
-logger.info('Hi');
-// 2016-07-29T16:10:05.123Z - info - DESKTOP-8ONSCVQ - UNKNOWN - SOMETHING - "Hi"
-````
 
-### 5. Log Output Application Name
+logger.info('info message');
+// LOG OUTPUT: 2017-09-09T13:10:25.909Z - info - HOSTNAME - UNKNOWN - CTA-AGENT - "info message"
+```
 
-By default, application name is set to UNKNOWN, to override it you need cement dependency to access application configuration
+* logger.author('author_name')
 
-````javascript
+```javascript
+'use strict';
+
 const Logger = require('cta-logger');
+
+const logger = new Logger();
+
+const cta_agent = logger.author('cta-agent');
+const cta_api = logger.author('cta-api');
+
+cta_agent.info('info message');
+cta_api.info('info message');
+// LOG OUTPUT: 2017-09-09T13:10:25.910Z - info - HOSTNAME - UNKNOWN - CTA-AGENT - "info message"
+// LOG OUTPUT: 2017-09-09T13:10:25.911Z - info - HOSTNAME - UNKNOWN - CTA-API - "info message"
+```
+
+[back to top](#guidelines)
+
+### 6. Application Name in Log Output
+
+The Logger has **_Application Name_** as a part of log output.
+
+By default, the application of the log output is set to "**UNKNOWN**".
+
+**Application Name** can be set by application configuration via cement dependency.
+
+```javascript
+'use strict';
+
+const Logger = require('cta-logger');
+
 const logger = new Logger({
   cement: {
     configuration: {
-      name: 'my app',
+      name: 'cta-oss',
     },
   },
 }, null);
-const foo = logger.author('foo');
-const bar = logger.author('bar');
 
-logger.info('Starting app...');
-// 2016-08-11T12:31:48.258Z - info - DESKTOP-8ONSCVQ - MY APP - UNKNOWN - "Starting app..."
+const cta_agent = logger.author('cta-agent');
+const cta_api = logger.author('cta-api');
 
-foo.info('Hi, i am foo');
-// 2016-08-11T12:31:48.262Z - info - DESKTOP-8ONSCVQ - MY APP - FOO - "Hi, i am foo"
+cta_agent.info('info message');
+cta_api.info('info message');
+// LOG OUTPUT: 2017-09-09T13:10:25.918Z - info - HOSTNAME - CTA-OSS - CTA-AGENT - "info message"
+// LOG OUTPUT: 2017-09-09T13:10:25.919Z - info - HOSTNAME - CTA-OSS - CTA-API - "info message"
+```
 
-bar.info('Hi, and i am bar');
-// 2016-08-11T12:31:48.263Z - info - DESKTOP-8ONSCVQ - MY APP - BAR - "Hi, and i am bar"
-````
+[back to top](#guidelines)
+
+## To Do
+
+* decoupling **cta-logger** and **winston**
