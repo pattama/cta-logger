@@ -1,4 +1,7 @@
-# cta-logger [ ![build status](https://git.sami.int.thomsonreuters.com/compass/cta-logger/badges/master/build.svg)](https://git.sami.int.thomsonreuters.com/compass/cta-logger/commits/master) [![coverage report](https://git.sami.int.thomsonreuters.com/compass/cta-logger/badges/master/coverage.svg)](https://git.sami.int.thomsonreuters.com/compass/cta-logger/commits/master)
+# cta-logger
+[![Build Status](https://travis-ci.org/thomsonreuters/cta-logger.svg?branch=master)](https://travis-ci.org/thomsonreuters/cta-logger)
+[![Coverage Status](https://coveralls.io/repos/github/thomsonreuters/cta-logger/badge.svg?branch=master)](https://coveralls.io/github/thomsonreuters/cta-logger?branch=master)
+[![codecov](https://codecov.io/gh/thomsonreuters/cta-logger/branch/master/graph/badge.svg)](https://codecov.io/gh/thomsonreuters/cta-logger)
 
 Logger Modules for Compass Test Automation, One of Libraries in CTA-OSS Framework
 

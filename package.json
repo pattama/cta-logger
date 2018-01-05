@@ -7,34 +7,37 @@
   "scripts": {
     "test": "NODE_PATH=. _mocha",
     "codecoverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec",
+    "coveralls": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && codecov",
     "lint": "eslint --quiet lib test",
     "docs": "jsdoc --readme README.md lib -r -d docs && opener ./docs/index.html"
   },
   "repository": {
     "type": "git",
-    "url": "git@git.sami.int.thomsonreuters.com:compass/cta-logger.git"
+    "url": "https://github.com/thomsonreuters/cta-common.git"
   },
   "engines": {
-    "node": "6.9.4"
+    "node": ">=6"
   },
   "devDependencies": {
     "chai": "~3.4.0",
     "chai-as-promised": "~5.1.0",
+    "codecov": "^3.0.0",
+    "coveralls": "^3.0.0",
     "eslint": "^3.2.2",
-    "eslint-config-cta": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/eslint-config-cta.git",
+    "eslint-config-cta": "^1.0.1",
     "istanbul": "~0.4.1",
     "jsdoc": "~3.4.0",
     "mocha": "~2.3.4",
     "moment": "~2.11.1",
     "node-schedule": "~0.6.0",
     "opener": "~1.4.0",
-    "sinon": "~1.17.0",
-    "shortid": "~2.2.4"
+    "shortid": "~2.2.4",
+    "sinon": "~1.17.0"
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "cta-common": "git+ssh://git@git.sami.int.thomsonreuters.com:compass/cta-common.git#1.0.0",
-    "winston": "~2.2.0",
-    "lodash": "4.14.0"
+    "cta-common": "thomsonreuters/cta-common#1.0.0",
+    "lodash": "4.14.0",
+    "winston": "~2.2.0"
   }
 }
